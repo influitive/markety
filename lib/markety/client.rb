@@ -20,6 +20,10 @@ module Markety
 
     public
 
+    def request_campaign(leads, campaign_id)
+      Markety::Campaign.new(self).request(leads, campaign_id)
+    end
+
     def get_lead_by_idnum(idnum)
       get_lead(LeadKey.new(LeadKeyType::IDNUM, idnum))
     end
@@ -106,6 +110,12 @@ module Markety
       list_operation(list_name, ListOperationType::IS_MEMBER_OF, idnum)
     end
 
+    def send_request(namespace, message)
+      @header.set_time(DateTime.now)
+      response = request(namespace, message, @header.to_hash)
+      response.to_hash
+    end
+
     private
 
     def list_operation(list_name, list_operation_type, idnum)
@@ -140,12 +150,6 @@ module Markety
         @logger.log(e) if @logger
         return nil
       end
-    end
-
-    def send_request(namespace, message)
-      @header.set_time(DateTime.now)
-      response = request(namespace, message, @header.to_hash)
-      response.to_hash
     end
 
     def request(namespace, message, header)

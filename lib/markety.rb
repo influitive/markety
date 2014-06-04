@@ -1,5 +1,6 @@
 require 'savon'
 require 'markety/authentication_header'
+require 'markety/campaign'
 require 'markety/client'
 require 'markety/enums'
 require 'markety/lead_key'
