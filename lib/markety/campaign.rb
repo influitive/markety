@@ -37,8 +37,17 @@ module Markety
     def message
       {
         source: 'MKTOWS', # hard-coding this for now??
-        campaign_id: campaign_id,
-        lead_list: lead_list
+        campaign_name: "MarketyCampaign",
+        program_name: "MarketyProgram",
+        lead_list: lead_list,
+        program_token_list: [
+          {
+            attrib: {
+              name: '{{my.conversationtopic}}',
+              value: 'Thank you for calling about adding a line of service to your current plan.'
+            }
+          }
+        ]
       }
     end
   end
