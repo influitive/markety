@@ -43,7 +43,7 @@ module Markety
         program_token_list: [
           {
             attrib: {
-              name: '{{my.conversationtopic}}',
+              name: '{{my.infl_custom_token}}',
               value: 'Thank you for calling about adding a line of service to your current plan.'
             }
           }
