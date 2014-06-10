@@ -65,9 +65,11 @@ module Markety
         return LeadRecord.from_hash(response[:success_sync_lead][:result][:lead_record])
       rescue Exception => e
         @logger.log(e) if @logger
-        return nil
+
+        return { error: e.message }
       end
     end
+
 
     def sync_lead_record_on_id(lead_record)
       idnum = lead_record.idnum
