@@ -38,6 +38,7 @@ module Markety
     end
 
     private
+
     def calculate_signature
       request_timestamp = get_request_timestamp
       string_to_encrypt = request_timestamp + @access_key

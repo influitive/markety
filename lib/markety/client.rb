@@ -8,6 +8,7 @@ module Markety
       env_namespace "SOAP-ENV"
       namespaces({"xmlns:ns1" => "http://www.marketo.com/mktows/"})
       pretty_print_xml true
+      raise_errors false
       log false if options[:log] == false
     end
 
@@ -21,6 +22,23 @@ module Markety
     end
 
     public
+
+    def authenticated?
+      # avoiding the request method because we want Savon Response object not a hash
+      @header.set_time(DateTime.now)
+
+      # Request a lead. Any lead.
+      response = request(:get_lead,
+        {"leadKey" => {"keyType"=>"IDNUM", "keyValue"=>1}},
+        @header.to_hash
+      )
+
+      # if it finds the lead, great, you're authed. If it doesn't it will fail
+      #   with a authentication_header_failure if you're not authed.
+      response.success? || response.body[:fault][:faultstring] != "20014 - Authentication failed"
+    rescue
+      false
+    end
 
     def get_lead_by_idnum(idnum)
       get_lead(LeadKey.new(LeadKeyType::IDNUM, idnum))
