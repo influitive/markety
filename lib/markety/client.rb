@@ -128,6 +128,32 @@ module Markety
       list_operation(list_name, ListOperationType::IS_MEMBER_OF, idnum)
     end
 
+    def request_campaign(email, join_link, campaign_name, program_name)
+      message = {
+        source: 'MKTOWS',
+        campaignName: campaign_name,
+        programName: program_name,
+        leadList: [
+          {
+            leadKey: {
+              keyType: "EMAIL",
+              keyValue: email
+            }
+          }
+        ],
+        programTokenList: [
+          {
+            attrib: {
+              name: "{{my.join_link}}",
+              value: join_link
+            }
+          }
+        ]
+      }
+
+      send_request(:request_campaign, message)
+    end
+
     private
 
     def list_operation(list_name, list_operation_type, idnum)
