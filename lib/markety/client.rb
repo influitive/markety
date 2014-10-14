@@ -154,6 +154,10 @@ module Markety
       send_request(:request_campaign, message)
     end
 
+    def available_fields(type = "LeadRecord")
+      send_request(:describe_m_object, object_name: type)
+    end
+
     private
 
     def list_operation(list_name, list_operation_type, idnum)
