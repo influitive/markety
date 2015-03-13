@@ -33,9 +33,11 @@ module Markety
         @header.to_hash
       )
 
-      # if it finds the lead, great, you're authed. If it doesn't it will fail
-      #   with a authentication_header_failure if you're not authed.
-      response.success? || response.body[:fault][:faultstring] != "20014 - Authentication failed"
+      # If you happen to find a lead, you're authed
+      return true if response.body[:success_get_lead].present?
+
+      # If it fails because it's can't find Lead you must be authed.
+      response.body[:fault][:faultstring] == "20103 - Lead not found" rescue false
     rescue
       false
     end
