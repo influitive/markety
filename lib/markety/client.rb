@@ -9,7 +9,8 @@ module Markety
       namespaces({"xmlns:ns1" => "http://www.marketo.com/mktows/"})
       pretty_print_xml true
       raise_errors false
-      log false if options[:log] == false
+      log options.fetch(:log, false)
+      logger options[:logger] if options[:logger]
     end
 
     Client.new(client, Markety::AuthenticationHeader.new(access_key, secret_key))
