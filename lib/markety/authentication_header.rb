@@ -1,7 +1,7 @@
 module Markety
   # This class exists only to encapsulate the authentication header part of a soap request to marketo
   class AuthenticationHeader
-    DIGEST = OpenSSL::Digest::Digest.new('sha1')
+    DIGEST = OpenSSL::Digest.new('sha1')
 
     def initialize(access_key, secret_key, time = DateTime.now)
       @access_key = access_key
